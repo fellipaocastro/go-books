@@ -13,9 +13,22 @@
 			"Rev": "e038957346d959db124df28ebf5c0adb7e7866bf"
 		},
 		{
+			"ImportPath": "github.com/go-martini/martini",
+			"Comment": "v1.0-128-ge038957",
+			"Rev": "e038957346d959db124df28ebf5c0adb7e7866bf"
+		},
+		{
 			"ImportPath": "github.com/lib/pq",
 			"Comment": "go1.0-cutoff-51-ga8d8d01",
 			"Rev": "a8d8d01c4f91602f876bf5aa210274e8203a6b45"
+		},
+		{
+			"ImportPath": "github.com/martini-contrib/render",
+			"Rev": "b65063311fac6cbf84d3538f5715f7847e648322"
+		},
+		{
+			"ImportPath": "github.com/oxtoacart/bpool",
+			"Rev": "754d38fccfc6e52083355014b6abc8d626445dfd"
 		}
 	]
 }
