@@ -1,13 +1,19 @@
 package main
 
 import (
-    "fmt"
     "os"
     "github.com/codegangsta/martini"
+    "github.com/martini-contrib/render"
     "net/http"
     "database/sql"
     _ "github.com/lib/pq"
 )
+
+type Book struct {
+    Title       string
+    Author      string
+    Description string
+}
 
 func SetupDB() *sql.DB {
     dbUrl := os.Getenv("DATABASE_URL")
@@ -29,8 +35,11 @@ func PanicIf(err error) {
 func main() {
     m := martini.Classic()
     m.Map(SetupDB())
+    m.Use(render.Renderer(render.Options{
+        Layout: "layout",
+    }))
 
-    m.Get("/", func(rw http.ResponseWriter, r *http.Request, db *sql.DB) {
+    m.Get("/", func(ren render.Render, r *http.Request, db *sql.DB) {
         searchTerm := "%" + r.URL.Query().Get("search") + "%"
         rows, err := db.Query(`SELECT title, author, description FROM books
                                WHERE title ILIKE $1
@@ -39,13 +48,15 @@ func main() {
         PanicIf(err)
         defer rows.Close()
 
-        var title, author, description string
+        books := []Book{}
         for rows.Next() {
-            err := rows.Scan(&title, &author, &description)
+            b := Book{}
+            err := rows.Scan(&b.Title, &b.Author, &b.Description)
             PanicIf(err)
-            fmt.Fprintf(rw, "Title: %s\nAuthor: %s\nDescription: %s\n\n",
-                title, author, description)
+            books = append(books, b)
         }
+
+        ren.HTML(200, "books", books)
     })
 
     m.Run()
