@@ -1,4 +1,4 @@
 go-books
 ========
 
-Books CRUD written in Go
+Bookbase written in Go
