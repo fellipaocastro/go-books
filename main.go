@@ -51,7 +51,15 @@ func NewBook(ren render.Render) {
 }
 
 func Create(ren render.Render, r *http.Request, db *sql.DB) {
-    var sql string = "INSERT INTO books (title, author, description) VALUES ($1, $2, $3)"
+    var sql string = `
+        INSERT INTO books (
+            title,
+            author,
+            description)
+        VALUES (
+            $1,
+            $2,
+            $3);`
 
     rows, err := db.Query(
         sql,
@@ -66,19 +74,19 @@ func Create(ren render.Render, r *http.Request, db *sql.DB) {
 }
 
 func ShowBooks(ren render.Render, r *http.Request, db *sql.DB) {
-    searchTerm := "%" + r.URL.Query().Get("search") + "%"
+    searchTerm := "%" + r.URL.Query().Get("q") + "%"
 
     var sql string = `
-    SELECT
-        title,
-        author,
-        description
-    FROM
-        books
-    WHERE
-        title ILIKE $1
-        OR author ILIKE $1
-        OR description ILIKE $1`
+        SELECT
+            title,
+            author,
+            description
+        FROM
+            books
+        WHERE
+            title ILIKE $1
+            OR author ILIKE $1
+            OR description ILIKE $1;`
 
     rows, err := db.Query(sql, searchTerm)
     PanicIf(err)
