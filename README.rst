@@ -1,7 +1,7 @@
 go-books
 ========
 
-Bookbase written in Go
+Bookshelf written in Go
 
 Setup
 -----
