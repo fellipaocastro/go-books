@@ -81,8 +81,7 @@ func ShowBooks(ren render.Render, r *http.Request, db *sql.DB) {
             title,
             author,
             description
-        FROM
-            books
+        FROM books
         WHERE
             title ILIKE $1
             OR author ILIKE $1
