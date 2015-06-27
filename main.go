@@ -18,7 +18,7 @@ type Book struct {
 func SetupDB() *sql.DB {
 	dbUrl := os.Getenv("DATABASE_URL")
 	if len(dbUrl) == 0 {
-		dbUrl = "postgres://postgres:postgres@127.0.0.1:5432/go-books?sslmode=disable"
+		dbUrl = "postgres://postgres:postgres@127.0.0.1:5432/go_books?sslmode=disable"
 	}
 
 	db, err := sql.Open("postgres", dbUrl)
